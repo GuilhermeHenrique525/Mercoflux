@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DASHBOARD - Mercoflux</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- <script src="js/heatmap.js"></script> -->
+    </head>
+    <body id="dashboard">
+        <div class="header">
+            <div class="container">
+                <a href="index.html">
+                    <img src="images/LogoF.png">
+                </a>
+                <ul class="navbar">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="projeto.html">PROJETO</a></li>
+                    <li><a href="simulador.html">SIMULADOR</a></li>
+                    <li id="menuCadastro"><a href="cadastro.html">CADASTRO</a></li>
+                    <li id="menuLogin"><a href="login.html">LOGIN</a></li>
+                    <li class="destaque" id="menuDashboard"><a href="dashboard.html">DASHBOARD</a></li>
+                    <li id="menuPerfil"><a href="perfil.html">MEU PERFIL</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="dashboard">
+            <div id="alertaDash" onclick="fecharModal()">
+                <div class="alerta-box">
+                    <p id="avisoMensagem">Aviso aqui</p>
+                    <button onclick="fecharModal()">Ok</button>
+                </div>
+            </div>
+            <div class="dashboard-container">
+                <h1 id="nomeMercado">Dashboard - Mercado </h1>
+            </div>
+            <div class="dashboard-container kpis">
+                <div class="caixa">
+                    <p>Quantidade de corredores</p>
+                    <span id="kpiTotalCorredores">0</span>
+                </div>
+                <div class="caixa">
+                    <p>Corredor mais popular da semana</p>
+                    <span id="kpiMaisPopular">0</span>
+                </div>
+                <div class="caixa">
+                    <p>Corredor menos popular da semana</p>
+                    <span id="kpiMenosPopular">0</span>
+                </div>
+                <div class="caixa">
+                    <p>Fluxo de pessoas no mês</p>
+                    <span id="kpiFluxo"></span>
+                </div>
+            </div>
+            <div class="graficos">
+                <!-- Gráfico do dia atual atualizando em tempo real com alertas! -->
+                <!-- Aqui aparece todos os corredores -->
+                <div class="dashboard-container grafico">
+                    <div class="dashboard-header">
+                        <div class="titulo">
+                            <div class="box-titulos">
+                                <p>Fluxo hoje</p>
+                                <p class="subtitulo">Quantidade de passagens</p>
+                            </div>
+                            <div class="parametros">
+                                <div class="caixa">
+                                    <div class="cor" style="background: #6FA8DC"></div>
+                                    <p>Baixo</p>
+                                </div>
+                                <div class="caixa">
+                                    <div class="cor" style="background: #FFD966"></div>
+                                    <p>Médio</p>
+                                </div>
+                                <div class="caixa">
+                                    <div class="cor" style="background: #83EF83"></div>
+                                    <p>Bom</p>
+                                </div>
+                                <div class="caixa">
+                                    <div class="cor" style="background: #E06666"></div>
+                                    <p>Alto</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="graficoDiaAtual"></canvas>
+                </div>
+                <!-- Gráfico da quantidade de pessoas/tempo aproximado que cada cliente passa no corredor, podendo comparar dois, máximo 7 dias-->
+                <div class="container-flex">
+                    <div class="dashboard-container grafico w50">
+                        <div class="dashboard-header">
+                            <div class="titulo">
+                                <p id="tituloGrafico">Fluxo de pessoas por corredor</p>
+                                <div class="caixa">
+                                    <span style="color: black; font-size: 1.3rem;">Mostrar por:</span>
+                                    <select id="mostrarPor" onchange="mudarFluxoPeriodo()">
+                                        <option value="dia">Dia</option>
+                                        <option value="mes">Mês</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="parametros" id="parametrosDia">
+                                <div class="caixa" id="parametrosPeriodoInicio">
+                                    <p>Início:</p>
+                                    <input type="date" id="inicio" value="2022-05-25" onfocusout="obterPassagensPeriodo()">
+                                </div>
+                                <div class="caixa" id="parametrosPeriodoFim">
+                                    <p>Fim:</p>
+                                    <input type="date" id="fim" value="2022-05-29" onfocusout="obterPassagensPeriodo()">
+                                </div>
+                                <div class="caixa">
+                                    <p>Corredores:</p>
+                                    <input type="text" id="corredor1Fluxo" value="01" placeholder="01" onfocusout="obterPassagensPeriodo()">
+                                    <span>|</span>
+                                    <input type="text" id="corredor2Fluxo" value="02" placeholder="02" onfocusout="obterPassagensPeriodo()">
+                                </div>
+                            </div>
+                            <div class="parametros" id="parametrosMes" style="display: none;">
+                                <div class="caixa">
+                                    <p>Corredores:</p>
+                                    <input type="text" id="corredor1FluxoMes" value="01" placeholder="01"onfocusout="obterPassagensPeriodoMes()">
+                                    <span>|</span>
+                                    <input type="text" id="corredor2FluxoMes" value="02" placeholder="02" onfocusout="obterPassagensPeriodoMes()">
+                                </div>
+                            </div>
+                        </div>
+                        <canvas id="graficoPeriodoDia"></canvas>
+                        <canvas id="graficoPeriodoMes" style="display: none;"></canvas>
+                    </div>
+
+                    <div class="dashboard-container grafico w50">
+                        <div class="dashboard-header">
+                            <div class="titulo">
+                                <p>Histórico de mudanças</p>
+                                <a href="perfil.html#MUD">+</a>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Localização</th>
+                                        <th>Mudança</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelaMudancas">
+                                    <!-- <tr>
+                                        <td>24/03/2004</td>
+                                        <td>Corredor 1</td>
+                                        <td>Foi colocado uma barraca de amostra de suco del valle.</td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="alinhar">
+                <div class="conteudo">
+                    <div class="informacoes">
+                        <h2>Institucional</h2>
+                        <ul>
+                            <li><a href="projeto.html" class="footera">Projeto</a></li>
+                            <li><a href="simulador.html" class="footera">Simulador finaceiro</a></li>
+                        </ul>
+                    </div>
+                    <div class="contato">
+                        <h2>Contato</h2>
+                        <ul>
+                            <li>help@mercoflux.on.spiceworks.com</li>
+                            <li><a href="https://mercoflux.on.spiceworks.com/portal" class="portal">Portal</a></li>
+                            <li>2521-7316</li>
+                        </ul>
+                    </div>
+                    <div class="conta">
+                        <h2>Conta</h2>
+                        <ul>
+                            <li><a href="login.html" class="footera">Login</a></li>
+                            <li><a href="cadastro.html" class="footera">Cadastro</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <p>Todos os resultados técnicos e criativos são resultado do esforço do Grupo 7&copy; de CCO</p>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="js/main.js"></script>
+<script src="js/moment.js"></script>
+<script src="js/dashboard.js"></script>

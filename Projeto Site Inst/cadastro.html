@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME - Mercoflux</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <img src="images/LogoF.png">
+            <ul class="navbar">
+                <li>
+                    <a href="index.html">
+                        HOME
+                    </a>
+                </li>
+                <li>
+                    <a href="Projeto.html">
+                        PROJETO
+                    </a>
+                </li>
+                <li>
+                    <a href="simulador.html">
+                        SIMULADOR
+                    </a>
+                </li>
+                <li  class="destaque">
+                    <a href="cadastro.html">CADASTRO
+
+                    </a>
+                </li>
+                <li>
+                    <a href="Login.html">
+                        LOGIN
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div> <!--Div Header-->
+
+
+    <div class="banner">
+        <div class="container cont1">
+            
+            
+            
+            <div class="card" id="div">
+                Entre com o seu nome: <br>
+               <input type="text" placeholder="Entre com seu nome" id="nome"><br>
+               Entre com o seu e-mail: <br>
+               <input type="text" placeholder="Entre com seu e-mail" id="email"><br>
+               Entre com seu CPF: <br>
+               <input type="text" placeholder="111.111.111-11" id="cpf"> <br>
+               Entre com sua senha: <br>
+               <input type="password" placeholder="********" id="senhaa"><br>
+               Confirme a sua senha: <br>
+               <input type="password" placeholder="********" id="confirmar"> <br>
+
+
+              
+               <button onclick="verificar()">Próximo</button>
+               <br>
+                <span id="visor"></span>
+                <br>
+                
+            </div>
+
+            <div class="card" style="display: none;" id="div_dois">
+                <center>
+                    <br><br>
+                Entre com o Nome do mercado: <br>
+               <input type="text" placeholder="Nome do mercado" id="nome_mercado"><br>
+
+               Entre com seu CNPJ: <br>
+               <input type="text" placeholder="Entre com seu CNPJ" id="cnpj"> <br>
+
+               Entre com seu CEP: <br>
+               <input type="text" placeholder="44444-444" id="cep"><br>
+
+               Insira seu Estado: <br>
+               <select name="Estado" id="estado">
+                   <option value="0">--Escolha o Estado--</option>
+                   <option value="1">SP</option>
+                   <option value="2">RJ</option>
+                   <option value="3">ES</option>
+                   <option value="4">MG</option>
+                   <option value="5">PR</option>
+                   <option value="6">GO</option>
+                   <option value="7">PR</option>
+                   <option value="8">SC</option>
+                   <option value="9">ES</option>
+                   <option value="10">DF</option>
+               </select> <br>
+
+               Insira sua cidade: <br>
+               <input type="text" placeholder="São Paulo" id="cidade"> <br>
+
+               Insira seu logradouro: <br>
+               <input type="text" placeholder="Rua Augusta" id="log"> <br>
+
+               Insira seu numero(referente a seu endereço): <br>
+               <input type="text" placeholder="235" id="numero"> <br>
+
+               Complemento: <br>
+               <input type="text" placeholder="3° andar" id="complemento"> <br>
+
+               <br><br>
+               <button onclick="final()">Cadastrar</button>
+            </center>
+               
+                
+                </div>
+
+        </div>
+    </div> <!--Div Banner-->
+
+    <div class="footer">
+        <div class="container">
+            <p>Todos os resultados técnicos e criativos são resultado do esforço do Grupo 7&copy; de CCO</p>
+        </div>
+    </div>
+</body>
+<script>
+   
+    function verificar() {
+        if (nome.value == 'sptech' && email.value == "mercoflux@gmail.com" && cpf.value == '222.222.222-22' && senhaa.value == 1234 && confirmar.value == 1234) {
+            window.location.href = "Login.html";
+        } else {
+
+           visor.innerHTML = '<br> <b style="color: red;">cadastro incorreto</b>'
+
+        }
+        if (nome.value == '' || email.value == "" || cpf.value == '' || senhaa.value == '' || confirmar.value == '') {
+            alert('cadastro incompleto')
+            
+        }
+        div.style.display = ('none')
+        div_dois.style.display = ('block')
+       
+    }
+    function final(params) {
+        if (nome_mercado.value == '' || cnpj.value == '' || cep.value == '' || estado.value == 0 || cidade.value == '' || log.value == '' || numero.value == '' || complemento.value == '') {
+            visor.innerHTML = "cadastro incorreto" 
+        } else {
+            window.location.href = "Login.html";
+        }
+        
+    }
+</script>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LOGIN - Mercoflux</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <div class="container">
+                <a href="index.html">
+                    <img src="images/LogoF.png">
+                </a>
+                <ul class="navbar">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="projeto.html">PROJETO</a></li>
+                    <li><a href="simulador.html">SIMULADOR</a></li>
+                    <li id="menuCadastro"><a href="cadastro.html">CADASTRO</a></li>
+                    <li class="destaque" id="menuLogin"><a href="login.html">LOGIN</a></li>
+                    <li id="menuDashboard"><a href="dashboard.html">DASHBOARD</a></li>
+                    <li id="menuPerfil"><a href="perfil.html">MEU PERFIL</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--Div Header-->
+
+        <div class="banner">
+            <div class="container cont1">
+                <div class="card log">
+                    <div class="login">
+                        E-mail: <br>
+                        <input type="text" placeholder="Seu e-mail" id="email"> <br> <br>
+                        Senha: <br>
+                        <input type="password" placeholder="*******" id="senha"> <br> <br>
+                        <button onclick="entrar()">Entrar</button> <br> 
+                        <span class="possui">Não possui login?</spans> <br>
+                        <a href="cadastro.html" class="fazer">Fazer cadastro</a> <br>
+                        <div id="loading"></div>
+                        <span class="alerta" id="msg_alerta"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Div Banner-->
+
+    <div class="footer">
+        <div class="alinhar">
+            <div class="conteudo">
+                <div class="informacoes">
+                    <h2>Institucional</h2>
+                    <ul>
+                        <li><a href="projeto.html" class="footera">Projeto</a></li>
+                        <li><a href="simulador.html" class="footera">Simulador finaceiro</a></li>
+                    </ul>
+                </div>
+                <div class="contato">
+                    <h2>Contato</h2>
+                    <ul>
+                        <li>help@mercoflux.on.spiceworks.com</li>
+                        <li><a href="https://mercoflux.on.spiceworks.com/portal" class="portal">Portal</a></li>
+                        <li>2521-7316</li>
+                    </ul>
+                </div>
+                <div class="conta">
+                    <h2>Conta</h2>
+                    <ul>
+                        <li><a href="login.html" class="footera">Login</a></li>
+                        <li><a href="cadastro.html" class="footera">Cadastro</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p>Todos os resultados técnicos e criativos são resultado do esforço do Grupo 7&copy; de CCO</p>
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/main.js"></script>
+<script>
+    function entrar(){
+        var emailVar = email.value;
+        var senhaVar = senha.value;
+
+        // TODO: VERIFICAR AS VALIDAÇÕES QUE ELES ESTÃO APRENDENDO EM ALGORITMOS 
+        if(emailVar == "" || senhaVar == ""){
+            alertar("Preencha todos os campos para prosseguir!");
+        }
+        else if(emailVar.indexOf("@") == -1){
+            alertar("Ops, e-mail inválido! Verifique e tente novamente.");
+        }
+        else if(senhaVar.length < 4){
+            alertar("E-mail e/ou senha inválido(s)!")
+        }
+        else{
+            loading.style.display = "block";
+    
+            fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: emailVar,
+                    senhaServer: senhaVar
+                })
+            }).then(function (resposta){
+                loading.style.display = "none";
+                console.log("ESTOU NO THEN DO entrar()!")
+    
+                if (resposta.ok){
+                    console.log(resposta);
+    
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.NOME_MERCADO = json.mercado;
+                        sessionStorage.ADM = json.administradorPrincipal;
+                        sessionStorage.ID_MERCADO = json.idMercado;
+                        sessionStorage.ID_USUARIO = json.idRepresentante;
+    
+                        window.location = "dashboard.html";
+                    });
+                }
+                else{
+                    console.log("Houve um erro ao tentar realizar o login!");
+    
+                    resposta.text().then(texto => {
+                        alertar(texto);
+                        console.error(texto);
+                    });
+                }
+            }).catch(function (erro){
+                console.log(erro);
+            })
+        }
+
+        return false;
+    }
+
+    function alertar(mensagem){
+        msg_alerta.style.display = "block";
+        msg_alerta.innerHTML = mensagem;
+    }
+</script>

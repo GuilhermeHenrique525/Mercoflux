@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PERFIL - Mercoflux</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="js/heatmap.js"></script>
+    </head>
+    <body id="dashboard">
+        <div class="header">
+            <div class="container">
+                <a href="index.html">
+                    <img src="images/LogoF.png">
+                </a>
+                <ul class="navbar">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="projeto.html">PROJETO</a></li>
+                    <li><a href="simulador.html">SIMULADOR</a></li>
+                    <li id="menuCadastro"><a href="cadastro.html">CADASTRO</a></li>
+                    <li id="menuLogin"><a href="login.html">LOGIN</a></li>
+                    <li id="menuDashboard"><a href="dashboard.html">DASHBOARD</a></li>
+                    <li class="destaque" id="menuPerfil"><a href="perfil.html">MEU PERFIL</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="perfil">
+            <div class="menu-lateral">
+                <ul>
+                    <li><h3>Usuários</h3></li>
+                    <li><a href="#Dados_P">Dados pessoais</a></li>
+                    <li id="menuAddUser"><a href="#ADDUSER">Adicionar usuários</a></li>
+                    <li id="menuListarUser"><a href="#LISTARUSER">Listar usuários</a></li>
+                    <li><h3>Mercado</h3></li>
+                    <li><a href="#Dados_M">Dados do mercado</a></li>
+                    <li><h3>Mudanças</h3></li>
+                    <li><a href="#MUD">Histórico de mudanças</a></li>
+                    <li id="menuAddMud"><a href="#ADDMUD">Adicionar mudança</a></li>
+                    <li><h3>Suporte</h3></li>
+                    <li><a href="https://mercoflux.on.spiceworks.com/portal">Acessar nosso portal</a></li>
+                    <li><a href="login.html" onclick="deslogar()">Deslogar da conta</a></li>
+                </ul>
+            </div>
+
+            <div class="tabelas">
+                <div class="informações" id="Dados_P">
+                    <span class="title">Dados Pessoais</span>
+                    <span>Nome:</span>
+                    <input type="text" id="nomeUsuarioAdministrador" class="micelanious" placeholder="Atualizar nome">   
+                    
+                    <span>E-Mail:</span>
+                    <input type="email" id="emailUsuarioAdministrador" class="micelanious" placeholder="Atualizar E-Mail">
+    
+                    <span>Senha:</span>
+                    <input type="password" id="senhaUsuarioAdministrador" class="micelanious" placeholder="Atualizar Senha">
+
+                    <span>CPF:</span>
+                    <input type="text" id="cpfUsuarioAdministrador" class="micelanious" placeholder="Atualizar CPF">
+
+                    <button class="btum" onclick="atualizarUsuario()">Atualizar Dados | Usuário</button>
+
+                    <div class="alerta" id="alertaUsuarioAdm"></div>
+                </div>
+                <div class="informações" id="ADDUSER">
+                    <span class="title">Adicionar usuários no mercado</span> 
+                    <span>Nome:</span>
+                    <input type="text" id="nomeUsuarioNovo" class="micelanious" placeholder="Insira o nome">   
+                    
+                    <span>E-mail:</span>
+                    <input type="text" id="emailUsuarioNovo" class="micelanious" placeholder="Insira o e-mail">
+    
+                    <span>Senha:</span>
+                    <input type="password" id="senhaUsuarioNovo" class="micelanious" placeholder="Insira a senha">
+
+                    <span>CPF:</span>
+                    <input type="number" id="cpfUsuarioNovo" class="micelanious" placeholder="Insira o CPF (somente números)">
+
+                    <button class="btum" onclick="adicionarUsuario()">Adicionar usuário</button>
+
+                    <div class="alerta" id="alertaNovoUsuario"></div>
+                </div>
+                <div class="informações listar-dados" id="LISTARUSER">
+                    <span class="title">Lista de usuários do mercado</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableUsuarios">
+                        </tbody>
+                    </table>
+                    <div class="alerta" id="alertaListaUsuarios"></div>
+                </div>
+                <div class="informações" id="Dados_M">
+                    <span class="title">Dados do Mercado</span> 
+            
+                    <span class="q">Nome do Mercado:</span>
+                    <input type="text" id="nomeMercado" class="micelanious1" disabled>
+                    
+                    <span>CNPJ:</span>
+                    <input type="text" id="cnpjMercado" class="micelanious1" disabled>
+
+                    <span>CEP:</span>
+                    <input type="text" id="cepMercado" class="micelanious1" disabled>
+                    
+                    <span>Estado:</span>
+                    <input type="text" id="estadoMercado" class="micelanious1" disabled>
+                    
+                    <span>Cidade:</span>
+                    <input type="text" id="cidadeMercado" class="micelanious1" disabled>
+
+                    <span>Logradouro:</span>
+                    <input type="text" id="logradouroMercado" class="micelanious1" disabled>
+
+                    <span>Numero:</span>
+                    <input type="text" id="numeroMercado" class="micelanious1" disabled>
+
+                    <span>Complemento:</span>
+                    <input type="text" id="complementoMercado" class="micelanious1" disabled>
+                </div>
+                <div class="informações listar-dados" id="MUD">
+                    <span class="title">Mudanças do mercado</span>
+                    <table>
+                        <thead>
+                            <tr class="title">
+                                <th>Data</th>
+                                <th>Localização</th>
+                                <th>Mudança</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaMudancas"></tbody>
+                    </table>
+                </div>
+                <div class="informações" id="ADDMUD">
+                    <span class="title">Adicionar Mudança</span>
+                    
+                    <span>Data:</span>
+                    <input type="date" id="dataMudanca" placeholder="Adicionar Data">
+
+                    <span>Localização:</span>
+                    <input type="text" id="localizacaoMudanca" placeholder="Insira a localização">
+                    
+                    <span>Mudança:</span>
+                    <input type="text" id="descricaoMudanca" placeholder="Insira a mudança">
+                    
+                    <button class="btum" onclick="adicionarMudanca()">Adicionar Mudança</button>
+
+                    <div class="alerta" id="alertaMudanca"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="alinhar">
+                <div class="conteudo">
+                    <div class="informacoes">
+                        <h2>Institucional</h2>
+                        <ul>
+                            <li><a href="projeto.html" class="footera">Projeto</a></li>
+                            <li><a href="simulador.html" class="footera">Simulador finaceiro</a></li>
+                        </ul>
+                    </div>
+                    <div class="contato">
+                        <h2>Contato</h2>
+                        <ul>
+                            <li>help@mercoflux.on.spiceworks.com</li>
+                            <li><a href="https://mercoflux.on.spiceworks.com/portal" class="portal">Portal</a></li>
+                            <li>2521-7316</li>
+                        </ul>
+                    </div>
+                    <div class="conta">
+                        <h2>Conta</h2>
+                        <ul>
+                            <li><a href="login.html" class="footera">Login</a></li>
+                            <li><a href="cadastro.html" class="footera">Cadastro</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <p>Todos os resultados técnicos e criativos são resultado do esforço do Grupo 7&copy; de CCO</p>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="js/main.js"></script>
+<script src="js/moment.js"></script>
+<script src="js/perfil.js"></script>
