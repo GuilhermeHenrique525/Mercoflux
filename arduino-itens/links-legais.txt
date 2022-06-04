@@ -1,2 +1,0 @@
-https://www.speedguide.net/port.php?port=3000
-https://www.speedguide.net/port.php?port=3306
