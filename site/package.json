@@ -1,10 +1,10 @@
 {
-  "name": "mercoflux-api",
+  "name": "site",
   "version": "1.0.0",
   "private":"true",
   "scripts": {
-    "start": "node ./mercoflux-api/app.js",
-    "postinstall": "cd mercoflux-api && npm install"
+    "start": "node ./site/app.js",
+    "postinstall": "cd site && npm install"
   },
   "author": "Feito pelos desenvolvedores @ Bandtec Digital School",
   "license": "MIT",
