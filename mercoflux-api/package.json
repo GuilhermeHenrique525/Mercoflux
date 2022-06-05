@@ -4,7 +4,7 @@
   "private":"true",
   "scripts": {
     "start": "node ./mercoflux-api/app.js",
-    "postinstall": "cd mercoflux-api && npm install",
+    "postinstall": "cd mercoflux-api && npm install"
   },
   "author": "Feito pelos desenvolvedores @ Bandtec Digital School",
   "license": "MIT",
