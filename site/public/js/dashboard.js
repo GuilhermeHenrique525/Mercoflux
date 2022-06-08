@@ -1,5 +1,5 @@
 // Tempo de atualização - 15 segundos (para demonstração)
-const tempoAtualizacao = 15 * 1000;
+const tempoAtualizacao = 5 * 1000;
 
 // Pegando informações do banco de dados
 window.onload = () => {
